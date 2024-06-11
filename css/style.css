@@ -1,0 +1,151 @@
+/* обнуление всех отступов, а так же учитывание обводки и отступов в размерах элемента */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* цвет фона */
+body {
+    background-color: rgb(255, 245, 232);
+}
+
+/* цвет фона */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100vh;
+}
+
+.title__text {
+    text-align: center;
+    font-size: calc(1.5rem + 6 * (100vw - 320px) / 880);
+    margin: 20px 0;
+    padding: 0 20px;
+}
+
+.btn-restart{
+    font-size: 1.5rem;
+    padding: 5px 10px;
+    margin: 20px 0;
+    border-radius: 5px;
+    border: none;
+    color: rgb(255, 245, 232);
+    background-color: #7a7a7a;
+    cursor: pointer;
+}
+
+.game-board {
+    --cell-size: 15vmin;
+    --cell-gap: 1vmin;
+
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, var(--cell-size));
+    grid-template-rows: repeat(4, var(--cell-size));
+    gap: var(--cell-gap);
+    border-radius: 1vmin;
+    background-color: #7a7a7a;
+    border: #7a7a7a solid var(--cell-gap);
+
+    @media (max-width: 500px) {
+        --cell-size: 20vmin;
+    }
+}
+
+.cell {
+    /* background-color: #dfb059;   */
+    background-color: #bdbdbd; 
+    border-radius: 1vmin;
+}
+
+.tile {
+    position: absolute;
+    top: calc(var(--y) * (var(--cell-size) + var(--cell-gap)));
+    left: calc(var(--x) * (var(--cell-size) + var(--cell-gap)));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--cell-size);
+    height: var(--cell-size);
+    border-radius: 1vmin;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 7.5vmin;
+    font-weight: bold;
+    background-color: hsl(23, 100%, var(--bg-lightness));
+    color: hsl(20, 25%, var(--text-lightness));
+    animation: show 200ms;
+    transition: 100ms;
+}
+
+@keyframes show {
+    0% {
+        opacity: 0.5;
+        transform: scale(0);
+    }
+}
+
+/* модальное окно */
+
+
+.main-container .modal {
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    left: 0;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .3);
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility .3s, opacity .3s;
+    overflow-y: auto;
+}
+.main-container .modal .modal-box {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: 92vmin;
+    height: auto;
+    padding: 45px;
+    margin: 2vmin 4vmin;
+    background-color: rgb(255, 245, 232);
+    box-shadow: 0px 0px 23px 0px rgba(34, 60, 80, .27);
+    border-radius: 1vmin;
+    transform: scale(0);
+    transition: transform .5s;
+}
+.main-container .modal .modal-box .modal-text__container{
+   font-size: 2rem;
+   margin: 30px 0;
+}
+.main-container .modal .modal-box .modal-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    padding: 5px;
+}
+.main-container .modal .modal-box .modal-close svg {
+    transition: all .3s;
+}
+.main-container .modal .modal-box .modal-close:hover svg {
+    transform: scale(1.2);
+}
+.main-container .open-modal {
+    visibility: visible;
+    opacity: 1;
+}
+.main-container .open-modal .modal-box {
+    transform: scale(1);
+}
